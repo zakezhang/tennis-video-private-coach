@@ -7,12 +7,47 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Claude-Skill-24608f?style=flat-square" alt="Claude Skill">
+  <img src="https://img.shields.io/badge/AI-Skill-24608f?style=flat-square" alt="AI Skill">
   <img src="https://img.shields.io/badge/language-EN%20%2B%20%E4%B8%AD%E6%96%87-24608f?style=flat-square" alt="中英文">
   <img src="https://img.shields.io/badge/license-MIT-d9f21c?style=flat-square&labelColor=153a58" alt="MIT 许可证">
 </p>
 
-**Tennis Video Private Coach** 是一个给业余网球爱好者的 Claude Skill。把手机拍的练球视频交给 Claude，它会像看过录像的教练一样告诉你：动作哪个环节出了问题、证据是哪几拍、下次具体练什么。
+**Tennis Video Private Coach** 是一个给业余网球爱好者的开源 AI 技能。把手机拍的练球视频交给你的 AI Agent，它会像看过录像的教练一样告诉你：动作哪个环节出了问题、证据是哪几拍、下次具体练什么。
+
+## 快速开始
+
+### 1. 复制这一句，发给你的 AI
+
+把下面这句话粘贴到你常用的 AI 工具或 Agent 的**聊天输入框**，发送即可：
+
+```text
+请帮我安装并配置这个网球视频复盘 Skill，检查运行环境：https://github.com/zakezhang/tennis-video-review-public/tree/main/skills/tennis-video-private-coach-zh
+```
+
+**Codex、ChatGPT、Claude、DeepSeek、Gemini、Kimi、Workbuddy、Trae** 都可以使用这个入口。支持技能安装的 Agent 会按当前工具的方式配置；不支持安装时，请让 AI 读取技能中的 `SKILL.md`，在本次对话中按它执行。
+
+### 2. 上传视频，说清你的情况
+
+上传练球视频，或把文件路径发给本地 Agent，再发送：
+
+> 用网球视频私教技能帮我复盘这个视频。**穿白衣服的是我，右手持拍，双手反手。**球一快我的正手就下网。告诉我这周该练什么。
+
+说清哪个人是你、持拍手和反手方式、最想解决的一个问题。带上上次的报告，还能看到前后对比。
+
+**运行条件：**完整复盘需要读取视频和执行代码；纯聊天环境无法生成标注慢动作。在本次对话中加载流程，不等于永久安装技能。
+
+<details>
+<summary><b>手动安装 / AI 打不开 GitHub？</b></summary>
+
+- 点击仓库的 **Code → Download ZIP**，下载并解压。
+- **Codex：**让内置的 `$skill-installer` 从本仓库安装 `skills/tennis-video-private-coach-zh`。也可以把整个技能文件夹复制到项目的 `.agents/skills/` 目录。如果技能没有出现，重启 Codex。参见 [官方技能说明](https://learn.chatgpt.com/docs/build-skills)。
+- **Claude Code：**把整个技能文件夹复制到 `~/.claude/skills/`（目录不存在则先创建）。参见 [官方技能说明](https://code.claude.com/docs/en/skills)。
+- **支持上传自定义技能的应用：**将技能文件夹打成 zip，通过应用支持的技能入口上传，并在可用时开启代码执行。
+- **其他聊天工具：**上传技能文件夹里的 `SKILL.md`，让 AI 在本次对话中按它执行。文件上传和代码执行能力取决于工具及账号。
+
+两个语言版本**选一个**即可：中文 `skills/tennis-video-private-coach-zh/`，英文 `skills/tennis-video-private-coach/`。运行需要 Python 3、ffmpeg，以及 `ultralytics`、`opencv-python`、`numpy`、`scipy`、`Pillow`，不需要 GPU。安装依赖和首次下载模型需要联网。
+
+</details>
 
 ## 你会得到
 
@@ -26,23 +61,6 @@
 <p align="center">
   <img src="./assets/readme/workflow-zh.svg" width="100%" alt="工作流程：上传视频、找出每一拍、挑最好和最差、做标注慢动作、写下次练习安排">
 </p>
-
-## 快速开始
-
-**1. 安装一个语言版本**
-
-| 在哪用 Claude | 怎么装 |
-| --- | --- |
-| Claude 网页版 / 桌面版 | 把 `skills/tennis-video-private-coach-zh/` 打成 zip，在设置里作为自定义技能上传。需要开启代码执行。 |
-| Claude Code | `cp -r skills/tennis-video-private-coach-zh ~/.claude/skills/` |
-
-英文版是 `skills/tennis-video-private-coach/`。技能会用到 Python 3 和 ffmpeg，并安装 `ultralytics`、`opencv-python`、`numpy`、`scipy`、`Pillow`，不需要 GPU。
-
-**2. 上传视频，说清三件事**
-
-> 这是我对着练习墙打的 20 分钟。**穿白衣服的是我，右手持拍，双手反手。**球一快我的正手就下网。帮我复盘，告诉我这周该练什么。
-
-哪个人是你、怎么握拍、最想解决的一个问题。带上上次的报告，还能看到前后对比。
 
 ## 它会先排查这些问题
 

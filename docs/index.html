@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Tennis Video Private Coach</title>
-<meta name="description" content="A Claude Skill that turns your tennis practice video into a coaching review with annotated slow-motion clips and a practice plan.">
+<meta name="description" content="An open-source AI skill that turns your tennis practice video into a coaching review with annotated slow-motion clips and a practice plan.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter+Tight:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
 <style>
@@ -89,6 +89,11 @@ td:first-child{font-weight:700}
 td.fix{color:var(--good)}
 
 .install{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:28px}
+.install .card{min-width:0}
+.install pre{white-space:pre-wrap;overflow-wrap:anywhere}
+.copy-skill{margin-top:12px;border:0;cursor:pointer;font-family:inherit}
+.copy-skill:focus-visible{outline:3px solid var(--court);outline-offset:3px}
+.copy-status{display:block;min-height:1.7em;font-size:14px;color:var(--muted)}
 pre{margin:10px 0 0;background:var(--board);color:#e3edf2;border-radius:8px;padding:14px 16px;overflow-x:auto;font-size:14px;line-height:1.55}
 code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
 .prompt{margin-top:28px;background:var(--paper);border-left:4px solid var(--ball);border-radius:0 10px 10px 0;padding:18px 22px;font-size:17px;max-width:46em}
@@ -122,10 +127,10 @@ footer a{color:#fff}
     </div>
     <h1 data-l="en">Your practice video, reviewed <span class="hl">like a coach watched it</span></h1>
     <h1 data-l="zh" hidden>把练球视频，变成<span class="hl">一份教练式复盘</span></h1>
-    <p class="lede" data-l="en">A Claude Skill for amateur tennis players. Upload a phone video of your session and get annotated slow-motion clips of your best and worst shots, the one thing that keeps breaking down, and a plan for your next practice.</p>
-    <p class="lede" data-l="zh" hidden>一个给业余网球爱好者的 Claude Skill。上传一段手机拍的练球视频，得到最好和最差几拍的标注慢动作、你反复出问题的那个环节，以及下一次练习的具体安排。</p>
+    <p class="lede" data-l="en">An open-source AI skill for amateur tennis players. Upload a phone video of your session and get annotated slow-motion clips of your best and worst shots, the one thing that keeps breaking down, and a plan for your next practice.</p>
+    <p class="lede" data-l="zh" hidden>一个给业余网球爱好者的开源 AI 技能。上传一段手机拍的练球视频，得到最好和最差几拍的标注慢动作、你反复出问题的那个环节，以及下一次练习的具体安排。</p>
     <div class="cta">
-      <a class="btn primary repo-link" href="#install"><span data-l="en">Get the skill</span><span data-l="zh" hidden>获取技能</span></a>
+      <a class="btn primary" href="#install"><span data-l="en">Get the skill</span><span data-l="zh" hidden>获取技能</span></a>
       <a class="btn ghost" href="#how"><span data-l="en">See how it works</span><span data-l="zh" hidden>看看怎么工作</span></a>
     </div>
     <div class="board">
@@ -204,8 +209,8 @@ footer a{color:#fff}
   <div class="eyebrow"><span data-l="en">How it works</span><span data-l="zh" hidden>工作原理</span></div>
   <h2 data-l="en">From phone footage to a coaching review</h2>
   <h2 data-l="zh" hidden>从手机视频到教练式复盘</h2>
-  <p class="intro" data-l="en">Claude runs the analysis in Python with an open pose model, then checks the key frames by eye before anything goes into the report.</p>
-  <p class="intro" data-l="zh" hidden>Claude 用 Python 和开源姿态模型做分析，进入报告的关键帧都会再逐帧人工确认。</p>
+  <p class="intro" data-l="en">Your AI agent runs the analysis in Python with an open pose model, then checks the key frames by eye before anything goes into the report.</p>
+  <p class="intro" data-l="zh" hidden>AI Agent 用 Python 和开源姿态模型做分析，进入报告的关键帧都会再逐帧检查。</p>
   <div class="pipe">
     <div><span class="n">STEP 1</span><b data-l="en">Pose</b><b data-l="zh" hidden>姿态识别</b><p data-l="en">YOLO pose on every few frames; you are tracked by your clothing if others are in shot.</p><p data-l="zh" hidden>YOLO 姿态模型；画面里有别人时按衣服颜色跟踪你。</p></div>
     <div><span class="n">STEP 2</span><b data-l="en">Swings</b><b data-l="zh" hidden>找挥拍</b><p data-l="en">Peaks in wrist speed, at least 1.6 s apart; hand position before the swing tells forehand from backhand.</p><p data-l="zh" hidden>手腕速度峰值，间隔至少 1.6 秒；按挥拍前手在身体哪侧分正反手。</p></div>
@@ -233,28 +238,33 @@ footer a{color:#fff}
 </div></section>
 
 <section id="install"><div class="wrap">
-  <div class="eyebrow"><span data-l="en">Install</span><span data-l="zh" hidden>安装</span></div>
-  <h2 data-l="en">Add it to Claude in a minute</h2>
-  <h2 data-l="zh" hidden>一分钟装进 Claude</h2>
-  <p class="intro" data-l="en">Pick one language folder. Both contain the same method.</p>
-  <p class="intro" data-l="zh" hidden>选一个语言版本的文件夹装就行，两个版本方法相同。</p>
+  <div class="eyebrow"><span data-l="en">Quick start</span><span data-l="zh" hidden>快速开始</span></div>
+  <h2 data-l="en">Copy one line. Send it to your AI.</h2>
+  <h2 data-l="zh" hidden>复制一句话，发给你的 AI</h2>
+  <p class="intro" data-l="en">Start in Codex, ChatGPT, Claude, DeepSeek, Gemini, Kimi, Workbuddy, or Trae. Let the agent configure the skill for its environment.</p>
+  <p class="intro" data-l="zh" hidden>在 Codex、ChatGPT、Claude、DeepSeek、Gemini、Kimi、Workbuddy 或 Trae 中发送，让 Agent 按当前环境配置技能。</p>
   <div class="install">
-    <div class="card"><h3>Claude (web / desktop)</h3>
-      <p data-l="en">Download the repo, zip <code>skills/tennis-video-private-coach</code> (English) or <code>skills/tennis-video-private-coach-zh</code> (中文), and upload it as a custom skill in Claude's settings. Code execution must be on.</p>
-      <p data-l="zh" hidden>下载仓库，把 <code>skills/tennis-video-private-coach-zh</code>（中文）或 <code>skills/tennis-video-private-coach</code>（英文）打成 zip，在 Claude 设置里作为自定义技能上传。需要开启代码执行。</p>
+    <div class="card">
+      <h3 data-l="en">1. Send this to your AI</h3><h3 data-l="zh" hidden>1. 把这句发给 AI</h3>
+      <p data-l="en">Paste into the chat box of your AI tool or agent.</p><p data-l="zh" hidden>粘贴到 AI 工具或 Agent 的聊天输入框。</p>
+      <pre data-l="en"><code id="install-en">Install and set up this tennis video review skill, and check its requirements: https://github.com/zakezhang/tennis-video-review-public/tree/main/skills/tennis-video-private-coach</code></pre>
+      <pre data-l="zh" hidden><code id="install-zh">请帮我安装并配置这个网球视频复盘 Skill，检查运行环境：https://github.com/zakezhang/tennis-video-review-public/tree/main/skills/tennis-video-private-coach-zh</code></pre>
+      <button type="button" class="btn primary copy-skill" id="copy-skill"><span data-l="en">Copy install prompt</span><span data-l="zh" hidden>复制安装指令</span></button>
+      <span class="copy-status" id="copy-status" role="status" aria-live="polite"></span>
     </div>
-    <div class="card"><h3>Claude Code</h3>
-      <p data-l="en">Copy a skill folder into your skills directory:</p>
-      <p data-l="zh" hidden>把技能文件夹复制到 skills 目录：</p>
-<pre><code><span class="clone">git clone https://github.com/OWNER/REPO</span>
-cp -r REPO/skills/tennis-video-private-coach ~/.claude/skills/</code></pre>
+    <div class="card">
+      <h3 data-l="en">2. Upload a video. Tell it about you.</h3><h3 data-l="zh" hidden>2. 上传视频，说清你的情况</h3>
+      <p data-l="en">Upload your practice video, or give a local agent the file path. Then send:</p><p data-l="zh" hidden>上传练球视频，或把文件路径发给本地 Agent，再发送：</p>
+      <div class="prompt">
+        <p data-l="en">Review this video using the tennis video coach skill. I'm the one in the white shirt, right-handed, two-handed backhand. My forehands go into the net when the ball comes fast. Tell me what to practice this week.</p>
+        <p data-l="zh" hidden>用网球视频私教技能帮我复盘这个视频。穿白衣服的是我，右手持拍，双手反手。球一快我的正手就下网。告诉我这周该练什么。</p>
+      </div>
     </div>
   </div>
-  <div class="prompt">
-    <small data-l="en">Try a prompt like</small><small data-l="zh" hidden>可以这样说</small>
-    <p data-l="en">“Here's 20 minutes of me hitting against the wall. I'm in the white shirt, right-handed, two-handed backhand. My forehands go into the net when the ball comes fast. Review it and tell me what to practice this week.”</p>
-    <p data-l="zh" hidden>“这是我对着练习墙打的 20 分钟。穿白衣服的是我，右手持拍，双手反手。球一快我的正手就下网。帮我复盘，告诉我这周该练什么。”</p>
-  </div>
+  <p class="note" data-l="en">The full review needs video file access, Python 3, ffmpeg, and permission to install packages and download model weights. A text-only chat cannot generate annotated clips. If skill installation is unavailable, ask the AI to read <code>SKILL.md</code> and follow it in this chat; this does not install a persistent skill.</p>
+  <p class="note" data-l="zh" hidden>完整复盘需要读取视频、运行 Python 3 和 ffmpeg，并允许安装依赖、下载模型。纯聊天环境无法生成标注视频。不支持安装技能时，可让 AI 读取 <code>SKILL.md</code> 并在本次对话中执行；这不等于永久安装技能。</p>
+  <p style="margin-top:16px" data-l="en">Cannot open GitHub? Download the repository ZIP and upload the English <code>skills/tennis-video-private-coach/SKILL.md</code>. <a href="https://github.com/zakezhang/tennis-video-review-public#quick-start">More setup options →</a></p>
+  <p style="margin-top:16px" data-l="zh" hidden>打不开 GitHub？下载仓库 ZIP，将中文的 <code>skills/tennis-video-private-coach-zh/SKILL.md</code> 上传给 AI。<a href="https://github.com/zakezhang/tennis-video-review-public/blob/main/README.zh-CN.md#快速开始">其他安装方式 →</a></p>
 </div></section>
 
 <section id="film"><div class="wrap">
@@ -277,8 +287,8 @@ cp -r REPO/skills/tennis-video-private-coach ~/.claude/skills/</code></pre>
 </main>
 
 <footer><div class="wrap">
-  <span>Tennis Video Private Coach · <span data-l="en">a Claude Skill · MIT License</span><span data-l="zh" hidden>一个 Claude Skill · MIT 许可证</span></span>
-  <a class="repo-link" href="#install"><span data-l="en">View on GitHub</span><span data-l="zh" hidden>在 GitHub 查看</span></a>
+  <span>Tennis Video Private Coach · <span data-l="en">an AI skill · MIT License</span><span data-l="zh" hidden>开源 AI 技能 · MIT 许可证</span></span>
+  <a class="repo-link" href="https://github.com/zakezhang/tennis-video-review-public"><span data-l="en">View on GitHub</span><span data-l="zh" hidden>在 GitHub 查看</span></a>
 </div></footer>
 
 <script>
@@ -289,10 +299,11 @@ cp -r REPO/skills/tennis-video-private-coach ~/.claude/skills/</code></pre>
     var repo = location.pathname.split('/').filter(Boolean)[0] || (m[1] + '.github.io');
     var url = 'https://github.com/' + m[1] + '/' + repo;
     document.querySelectorAll('a.repo-link').forEach(function(a){ a.href = url; });
-    document.querySelectorAll('.clone').forEach(function(s){ s.textContent = 'git clone ' + url; });
-    document.querySelectorAll('pre code').forEach(function(c){ c.innerHTML = c.innerHTML.replace(/REPO\//g, repo + '/'); });
   }
+  var activeLang = 'en';
   function set(lang){
+    activeLang = lang === 'zh' ? 'zh' : 'en';
+    document.getElementById('copy-status').textContent = '';
     document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
     document.body.classList.toggle('zh', lang === 'zh');
     document.querySelectorAll('[data-l]').forEach(function(el){ el.hidden = el.getAttribute('data-l') !== lang; });
@@ -302,6 +313,16 @@ cp -r REPO/skills/tennis-video-private-coach ~/.claude/skills/</code></pre>
     document.getElementById('b-zh').setAttribute('aria-pressed', lang === 'zh');
     try { localStorage.setItem('tvpc-lang', lang); } catch(e){}
   }
+  document.getElementById('copy-skill').onclick = async function(){
+    var lang = activeLang;
+    var text = document.getElementById('install-' + lang).textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      if (lang === activeLang) document.getElementById('copy-status').textContent = lang === 'zh' ? '已复制，粘贴到你的 AI 即可。' : 'Copied. Paste it into your AI.';
+    } catch(e) {
+      if (lang === activeLang) document.getElementById('copy-status').textContent = lang === 'zh' ? '请选中上方指令并手动复制。' : 'Select the prompt above and copy it manually.';
+    }
+  };
   var saved = null; try { saved = localStorage.getItem('tvpc-lang'); } catch(e){}
   var q = new URLSearchParams(location.search).get('lang');
   set(q || saved || ((navigator.language || '').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en'));

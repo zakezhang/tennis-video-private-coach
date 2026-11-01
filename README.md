@@ -7,12 +7,47 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Claude-Skill-24608f?style=flat-square" alt="Claude Skill">
+  <img src="https://img.shields.io/badge/AI-Skill-24608f?style=flat-square" alt="AI Skill">
   <img src="https://img.shields.io/badge/language-EN%20%2B%20%E4%B8%AD%E6%96%87-24608f?style=flat-square" alt="English and Chinese">
   <img src="https://img.shields.io/badge/license-MIT-d9f21c?style=flat-square&labelColor=153a58" alt="MIT license">
 </p>
 
-**Tennis Video Private Coach** is a Claude Skill for amateur players. Give Claude a phone video of your practice and get back what a coach would tell you after watching it: which part of your stroke breaks down, the shots that prove it, and what to practice next.
+**Tennis Video Private Coach** is an open-source AI skill for amateur players. Give your AI agent a phone video of your practice and get back what a coach would tell you after watching it: which part of your stroke breaks down, the shots that prove it, and what to practice next.
+
+## Quick start
+
+### 1. Copy this line. Send it to your AI.
+
+Paste into the **chat box** of the AI tool or agent you use:
+
+```text
+Install and set up this tennis video review skill, and check its requirements: https://github.com/zakezhang/tennis-video-review-public/tree/main/skills/tennis-video-private-coach
+```
+
+You can send the same prompt to **Codex, ChatGPT, Claude, DeepSeek, Gemini, Kimi, Workbuddy, or Trae**. Agents with skill support can configure it for their environment. If installation is unavailable, ask the AI to read the skill’s `SKILL.md` and follow it in this chat.
+
+### 2. Upload your video. Tell it about you.
+
+Upload a practice video, or give a local agent its file path, then send:
+
+> Review this video using the tennis video coach skill. **I'm the one in the white shirt, right-handed, two-handed backhand.** My forehands go into the net when the ball comes fast. Tell me what to practice this week.
+
+Which player you are, your dominant hand and backhand, and the one problem you want fixed. Add last time's report for a before/after comparison.
+
+**Requirements:** the full review needs video file access and code execution; a text-only chat cannot produce annotated clips. Loading instructions for this chat does not install a persistent skill.
+
+<details>
+<summary><b>Manual setup / AI cannot open GitHub?</b></summary>
+
+- Download this repository using **Code → Download ZIP**, then extract it.
+- **Codex:** ask its built-in `$skill-installer` to install `skills/tennis-video-private-coach` from this repository. Alternatively, copy that entire skill folder into your project's `.agents/skills/` directory. If the skill does not appear, restart Codex. See the [official skills guide](https://learn.chatgpt.com/docs/build-skills).
+- **Claude Code:** copy the entire skill folder into `~/.claude/skills/` (create the directory if needed). See the [official skills guide](https://code.claude.com/docs/en/skills).
+- **Apps with custom skill upload:** zip the skill folder, upload it through the app's supported skill interface, and enable code execution if available.
+- **Other chats:** upload `SKILL.md` from the skill folder and ask the AI to follow it in this conversation. File upload and code execution depend on the tool and account.
+
+Choose **one** version: `skills/tennis-video-private-coach/` for English, or `skills/tennis-video-private-coach-zh/` for Chinese. The workflow uses `ultralytics`, `opencv-python`, `numpy`, `scipy`, and `Pillow`, plus Python 3 and ffmpeg. No GPU required. Package installation and the first model download need network access.
+
+</details>
 
 ## What you get
 
@@ -26,23 +61,6 @@
 <p align="center">
   <img src="./assets/readme/workflow.svg" width="100%" alt="How it works: upload video, find every swing, pick best and worst, render annotated clips, write the next-session plan">
 </p>
-
-## Quick start
-
-**1. Install one language version**
-
-| Where you use Claude | How |
-| --- | --- |
-| Claude apps (web, desktop) | Zip `skills/tennis-video-private-coach/` and upload it as a custom skill in settings. Code execution must be on. |
-| Claude Code | `cp -r skills/tennis-video-private-coach ~/.claude/skills/` |
-
-The Chinese version is `skills/tennis-video-private-coach-zh/`. The skill runs Python 3 and ffmpeg and installs `ultralytics`, `opencv-python`, `numpy`, `scipy` and `Pillow`. No GPU needed.
-
-**2. Upload a video and say three things**
-
-> Here's 20 minutes of me hitting against the wall. **I'm the one in the white shirt, right-handed, two-handed backhand.** My forehands go into the net when the ball comes fast. Review it and tell me what to practice this week.
-
-Which player you are, how you hold the racket, and the one problem you want fixed. Add last time's report to get a before/after comparison.
 
 ## Faults it checks first
 
