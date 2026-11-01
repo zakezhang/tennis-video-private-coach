@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title desc">
+  <title id="title">How it works</title>
+  <desc id="desc">Five steps from phone footage to a coaching review. Upload video → Find every swing → Pick best &amp; worst → Annotated clips → Next-session plan</desc>
+  <rect width="1200" height="320" rx="24" fill="#153a58"/>
+  <line x1="56" y1="60" x2="1144" y2="60" stroke="#ffffff" stroke-width="3" opacity="0.18"/>
+  <text x="56" y="44" font-family="'DIN Condensed', 'Barlow Condensed', 'Arial Narrow', -apple-system, 'Segoe UI', sans-serif" font-size="20" font-weight="700" letter-spacing="3" fill="#d9f21c">HOW IT WORKS</text>
+    <path d="M180 132 Q 255.0 76 330 132" fill="none" stroke="#d9f21c" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <circle cx="255.0" cy="104" r="7" fill="#d9f21c"/>
+    <g transform="translate(140 0)">
+      <circle cx="0" cy="140" r="34" fill="#24608f" stroke="#ffffff" stroke-width="3"/>
+      <text x="0" y="150" text-anchor="middle" font-family="'DIN Condensed', 'Barlow Condensed', 'Arial Narrow', -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="700" fill="#ffffff">01</text>
+      <text x="0" y="214" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="22" font-weight="800" fill="#ffffff">Upload video</text>
+      <text x="0" y="246" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="19" fill="#bcd3e2">Phone footage of</text>
+      <text x="0" y="272" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="19" fill="#bcd3e2">your session</text>
+    </g>
+    <path d="M410 132 Q 485.0 76 560 132" fill="none" stroke="#d9f21c" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <circle cx="485.0" cy="104" r="7" fill="#d9f21c"/>
+    <g transform="translate(370 0)">
+      <circle cx="0" cy="140" r="34" fill="#24608f" stroke="#ffffff" stroke-width="3"/>
+      <text x="0" y="150" text-anchor="middle" font-family="'DIN Condensed', 'Barlow Condensed', 'Arial Narrow', -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="700" fill="#ffffff">02</text>
+      <text x="0" y="214" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="22" font-weight="800" fill="#ffffff">Find every swing</text>
+      <text x="0" y="246" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="19" fill="#bcd3e2">Forehand and</text>
+      <text x="0" y="272" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="19" fill="#bcd3e2">backhand split</text>
+    </g>
+    <path d="M640 132 Q 715.0 76 790 132" fill="none" stroke="#d9f21c" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <circle cx="715.0" cy="104" r="7" fill="#d9f21c"/>
+    <g transform="translate(600 0)">
+      <circle cx="0" cy="140" r="34" fill="#24608f" stroke="#ffffff" stroke-width="3"/>
+      <text x="0" y="150" text-anchor="middle" font-family="'DIN Condensed', 'Barlow Condensed', 'Arial Narrow', -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="700" fill="#ffffff">03</text>
+      <text x="0" y="214" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="22" font-weight="800" fill="#ffffff">Pick best &amp; worst</text>
+      <text x="0" y="246" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="19" fill="#bcd3e2">3 of each stroke,</text>
+      <text x="0" y="272" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="19" fill="#bcd3e2">checked by eye</text>
+    </g>
+    <path d="M870 132 Q 945.0 76 1020 132" fill="none" stroke="#d9f21c" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round"/>
+    <circle cx="945.0" cy="104" r="7" fill="#d9f21c"/>
+    <g transform="translate(830 0)">
+      <circle cx="0" cy="140" r="34" fill="#24608f" stroke="#ffffff" stroke-width="3"/>
+      <text x="0" y="150" text-anchor="middle" font-family="'DIN Condensed', 'Barlow Condensed', 'Arial Narrow', -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="700" fill="#ffffff">04</text>
+      <text x="0" y="214" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="22" font-weight="800" fill="#ffffff">Annotated clips</text>
+      <text x="0" y="246" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="19" fill="#bcd3e2">Swing path, freezes,</text>
+      <text x="0" y="272" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="19" fill="#bcd3e2">best-swing overlay</text>
+    </g>
+    <g transform="translate(1060 0)">
+      <circle cx="0" cy="140" r="34" fill="#24608f" stroke="#ffffff" stroke-width="3"/>
+      <text x="0" y="150" text-anchor="middle" font-family="'DIN Condensed', 'Barlow Condensed', 'Arial Narrow', -apple-system, 'Segoe UI', sans-serif" font-size="28" font-weight="700" fill="#ffffff">05</text>
+      <text x="0" y="214" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="22" font-weight="800" fill="#ffffff">Next-session plan</text>
+      <text x="0" y="246" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="19" fill="#bcd3e2">Drills, targets</text>
+      <text x="0" y="272" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="19" fill="#bcd3e2">and when to move on</text>
+    </g>
+</svg>

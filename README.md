@@ -1,70 +1,87 @@
-# Tennis Video Private Coach
+<p align="center">
+  <img src="./assets/readme/hero.svg" width="100%" alt="Tennis Video Private Coach: upload a practice video, get annotated slow motion of your best and worst shots and a plan for your next session">
+</p>
 
-**English** · [中文](README.zh-CN.md)
+<p align="center">
+  <b>English</b> · <a href="README.zh-CN.md">中文</a> · <a href="https://zakezhang.github.io/tennis-video-review-public/">Project page</a>
+</p>
 
-A Claude Skill that turns your tennis practice video into a coaching review: what breaks down in your stroke, which shots prove it, and exactly what to practice next.
+<p align="center">
+  <img src="https://img.shields.io/badge/Claude-Skill-24608f?style=flat-square" alt="Claude Skill">
+  <img src="https://img.shields.io/badge/language-EN%20%2B%20%E4%B8%AD%E6%96%87-24608f?style=flat-square" alt="English and Chinese">
+  <img src="https://img.shields.io/badge/license-MIT-d9f21c?style=flat-square&labelColor=153a58" alt="MIT license">
+</p>
 
-Give it a phone video of a practice session and it will:
+**Tennis Video Private Coach** is a Claude Skill for amateur players. Give Claude a phone video of your practice and get back what a coach would tell you after watching it: which part of your stroke breaks down, the shots that prove it, and what to practice next.
 
-- **Find every swing** and separate forehands, two-handed backhands and one-handed backhands.
-- **Pick your 3 best and 3 worst shots** of each type and render annotated slow-motion clips: your real footage at quarter speed, with your swing path drawn on it, freezes at the top of the take-back and at contact, and your best swing overlaid on your worst as a dashed line.
-- **Count net and out** when the ball is visible (practice wall, clean indoor footage), and tell you plainly when it isn't.
-- **Measure technique** on every swing: take-back height, knee bend, stance width, contact height.
-- **Check knees and footwork**: hopping, one-leg landings, pivoting on a locked straight leg.
-- **Compare with your last review**, so you can see what actually changed.
-- **Write your next session**: drills with reps, a countable target, and when to move on, matched to whether you train with a wall, a ball machine, a coach or a partner.
+## What you get
 
-It also ships with a table of common amateur faults (sky balls, late contact, upright two-hander take-back, hopping, late one-hander) with how each shows on video and how to fix it.
+- **12 annotated clips**: your 3 best and 3 worst forehands and backhands, at quarter speed on your own footage, with your swing path drawn on you, freezes at the take-back and at contact, and your best swing overlaid on your worst.
+- **A straight answer to your question**, such as *"why do my forehands fly long?"*, at the top of the report.
+- **Technique measured on every swing**: take-back height, knee bend, stance width, contact height.
+- **Knees and footwork, every time**: hopping, one-leg landings, pivoting on a straight leg.
+- **Net and out counts** when the ball is visible, and a plain note when it isn't.
+- **A plan for your next session** that fits how you train: wall, ball machine, coach or partner.
 
-## What's inside
+<p align="center">
+  <img src="./assets/readme/workflow.svg" width="100%" alt="How it works: upload video, find every swing, pick best and worst, render annotated clips, write the next-session plan">
+</p>
 
-```
-skills/
-  tennis-video-private-coach/      English skill
-    SKILL.md
-  tennis-video-private-coach-zh/   Chinese skill (中文版)
-    SKILL.md
-docs/
-  index.html                       Project page (GitHub Pages)
-```
+## Quick start
 
-Install one language version; they contain the same method.
+**1. Install one language version**
 
-## Install
+| Where you use Claude | How |
+| --- | --- |
+| Claude apps (web, desktop) | Zip `skills/tennis-video-private-coach/` and upload it as a custom skill in settings. Code execution must be on. |
+| Claude Code | `cp -r skills/tennis-video-private-coach ~/.claude/skills/` |
 
-**Claude apps (claude.ai / desktop):** zip the skill folder you want (for example `tennis-video-private-coach/`) and upload it as a custom skill in Claude's settings. Code execution needs to be enabled.
+The Chinese version is `skills/tennis-video-private-coach-zh/`. The skill runs Python 3 and ffmpeg and installs `ultralytics`, `opencv-python`, `numpy`, `scipy` and `Pillow`. No GPU needed.
 
-**Claude Code:** copy the folder into `~/.claude/skills/` (personal) or `.claude/skills/` in a project.
+**2. Upload a video and say three things**
 
-The skill needs an environment that can run Python 3 and ffmpeg and install `ultralytics`, `opencv-python`, `numpy`, `scipy` and `Pillow`. No GPU required.
+> Here's 20 minutes of me hitting against the wall. **I'm the one in the white shirt, right-handed, two-handed backhand.** My forehands go into the net when the ball comes fast. Review it and tell me what to practice this week.
 
-## Use it
+Which player you are, how you hold the racket, and the one problem you want fixed. Add last time's report to get a before/after comparison.
 
-Upload your practice video and tell Claude:
+## Faults it checks first
 
-- which person in the frame is you (clothing, position);
-- your dominant hand, and one- or two-handed backhand;
-- where you practiced (wall / ball machine / coach / rally, indoor or outdoor);
-- the one thing you most want fixed, for example *"lots of my forehands fly long"*.
+| You notice | It usually finds |
+| --- | --- |
+| Balls fly long or into the sky | A swing path that finishes straight up; lifting from the knees on high bounces |
+| Forehands into the net | A take-back above the head, so the racket can't drop in time |
+| Contact too far back, then crowded | Late preparation: reaching for wide balls, flicking fast ones |
+| Two-handed backhand into the net | The racket held upright at the chest instead of resting at the hip |
+| Hopping, landing on one leg | A narrow stance and swinging before the feet stop |
+| Late one-handed backhand | Setting up as a two-hander, then switching |
 
-Example prompt:
+Each comes with how it shows on video and a drill to fix it.
 
-> Here's 20 minutes of me hitting against the wall. I'm the one in the white shirt, right-handed, two-handed backhand. My forehands keep going into the net when the ball comes fast. Review it and tell me what to practice this week.
+## Film it so the review is sharp
 
-If you have a previous review, include it and you'll get a before/after comparison.
-
-## Filming tips
-
-- **Side-on is the most useful angle**: outside the net on your hitting side, 3–4 m away, waist height.
-- **Behind you** (1.2–1.5 m high, centered) is best for counting net/out.
-- Shoot 4K 60 fps or 1080p 120 fps, lock focus and exposure, and record a few continuous minutes rather than many short clips.
+- **Side-on is the most useful angle**: outside the net on your hitting side, 3–4 m away, at waist height.
+- **Behind you**, 1.2–1.5 m high and centered, is best for counting net and out.
+- 4K 60 fps or 1080p 120 fps, focus and exposure locked, a few continuous minutes.
 - Outdoors, frame more of the far court and less sky and trees.
 
 ## Limits
 
-- Pose comes from a single phone camera, so knee angles and contact depth are approximate. Compare your numbers with your own past sessions, not with other people.
-- With moving trees or many people in the background, the ball usually can't be tracked, so no net/out percentage is reported.
-- This is not medical advice. If a knee or anything else keeps hurting, see a sports-medicine doctor.
+- Pose comes from one phone camera, so angles are estimates. Compare with your own past sessions, not with other players.
+- With moving trees or many people in the background the ball usually can't be tracked, so no net/out percentage is given.
+- Not medical advice. If something keeps hurting, see a sports-medicine doctor.
+
+<details>
+<summary><b>What's in this repository</b></summary>
+
+```
+skills/
+  tennis-video-private-coach/      English skill
+  tennis-video-private-coach-zh/   Chinese skill
+docs/index.html                    Project page (GitHub Pages)
+assets/readme/                     README images (SVG)
+```
+
+</details>
 
 ## License
 

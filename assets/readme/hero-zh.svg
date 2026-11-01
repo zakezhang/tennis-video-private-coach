@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="430" viewBox="0 0 1200 430" role="img" aria-labelledby="title desc">
+  <title id="title">Tennis Video Private Coach</title>
+  <desc id="desc">头图：一个把网球练习视频变成标注慢动作和练习计划的 Claude Skill。右侧是一帧标注视频的示意图。</desc>
+  <defs>
+    <linearGradient id="swing" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0" stop-color="#ff8c1a"/><stop offset="1" stop-color="#2fe0ff"/>
+    </linearGradient>
+    <clipPath id="frame"><rect x="0" y="0" width="450" height="340" rx="16"/></clipPath>
+  </defs>
+
+  <rect width="1200" height="430" rx="24" fill="#24608f"/>
+
+  <g id="title-block" transform="translate(64 56)">
+    <text x="0" y="18" font-family="'DIN Condensed', 'Barlow Condensed', 'Arial Narrow', -apple-system, 'Segoe UI', sans-serif" font-size="20" font-weight="700" letter-spacing="3" fill="#bcd3e2">给网球爱好者的 CLAUDE SKILL</text>
+    <text x="0" y="98" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="62" font-weight="800" fill="#ffffff">Tennis Video</text>
+    <rect x="0" y="156" width="418" height="18" fill="#d9f21c"/>
+    <text x="0" y="174" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="62" font-weight="800" fill="#ffffff">Private Coach</text>
+    <text x="0" y="226" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="25" fill="#e6f0f7">上传一段练球视频，得到最好和</text>
+    <text x="0" y="260" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="25" fill="#e6f0f7">最差几拍的标注慢动作，</text>
+    <text x="0" y="294" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="25" fill="#e6f0f7">以及下一次的练习安排。</text>
+    <text x="0" y="336" font-family="'DIN Condensed', 'Barlow Condensed', 'Arial Narrow', -apple-system, 'Segoe UI', sans-serif" font-size="19" font-weight="600" letter-spacing="1" fill="#bcd3e2">MIT  ·  English + 中文  ·  Claude Code 与 Claude 应用</text>
+  </g>
+
+  <g id="annotated-frame" transform="translate(694 38)">
+    <rect x="-8" y="-8" width="466" height="356" rx="22" fill="#153a58"/>
+    <g clip-path="url(#frame)">
+      <rect width="450" height="340" fill="#2b6f9f"/>
+      <polygon points="20,340 430,340 345,150 105,150" fill="#3378a8"/>
+      <g stroke="#ffffff" stroke-width="3" fill="none" opacity="0.8">
+        <polygon points="20,340 430,340 345,150 105,150"/>
+        <line x1="85" y1="225" x2="365" y2="225"/><line x1="225" y1="225" x2="225" y2="340"/>
+      </g>
+      <rect x="100" y="132" width="250" height="20" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.55"/>
+      <path d="M205 168 C 240 118, 290 128, 285 180 S 262 258, 300 250 S 342 205, 312 150 S 255 116, 200 140" fill="none" stroke="#0b1820" stroke-width="9" stroke-dasharray="15 12" opacity="0.65"/>
+      <path d="M205 168 C 240 118, 290 128, 285 180 S 262 258, 300 250 S 342 205, 312 150 S 255 116, 200 140" fill="none" stroke="#5cff5c" stroke-width="5" stroke-dasharray="15 12"/>
+      <path d="M195 185 C 230 92, 305 66, 300 132 S 225 240, 285 232 S 350 160, 312 118 S 248 98, 192 148" fill="none" stroke="url(#swing)" stroke-width="8" stroke-linecap="round"/>
+      <circle cx="304" cy="82" r="27" fill="none" stroke="#e0714f" stroke-width="5"/>
+      <circle cx="285" cy="232" r="22" fill="none" stroke="#ffffff" stroke-width="4"/>
+      <circle cx="285" cy="232" r="6" fill="#d9f21c"/>
+      <rect x="62" y="10" width="326" height="40" rx="6" fill="#0b1820"/>
+      <text x="225" y="38" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="22" font-weight="800" fill="#ff8f75">引拍举过了头顶</text>
+      <rect x="62" y="282" width="326" height="40" rx="6" fill="#0b1820"/>
+      <text x="225" y="309" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="20" font-weight="600" fill="#ffffff">改法：引拍停在肩高</text>
+      <text x="16" y="96" font-family="'DIN Condensed', 'Barlow Condensed', 'Arial Narrow', -apple-system, 'Segoe UI', sans-serif" font-size="20" font-weight="700" fill="#d9f21c">1/4× 慢放</text>
+      <text x="436" y="96" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif" font-size="16" fill="#bcd3e2" opacity="0.9">示意图</text>
+    </g>
+  </g>
+</svg>
