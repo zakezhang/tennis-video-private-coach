@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tennis Video Review</title>
+<meta name="description" content="A Claude Skill that turns your tennis practice video into a coaching review with annotated slow-motion clips and a practice plan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter+Tight:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
+<style>
+/* Hard court: blue court band with white lines, scoreboard strip, ball yellow only for numbers and highlights. */
+:root{
+  --bg:#eef3f5; --paper:#ffffff; --ink:#102a3a; --muted:#56707f; --line:#d2dee4;
+  --court:#24608f; --court-deep:#1a4a70; --court-soft:#e3edf4;
+  --ball:#d9f21c; --board:#0d1d28; --board-muted:#8ea6b4;
+  --good:#2b7a4b; --good-soft:#e1f1e7; --bad:#b84a2b; --bad-soft:#f8e5de;
+  --f-body:"Inter Tight","Noto Sans SC","PingFang SC",system-ui,sans-serif;
+  --f-num:"Barlow Condensed","Arial Narrow",sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root{
+  --bg:#0b1820; --paper:#112330; --ink:#e3edf2; --muted:#8fa7b4; --line:#213744;
+  --court:#1d4e74; --court-deep:#153a58; --court-soft:#16303f;
+  --board:#081118; --good:#6fd09a; --good-soft:#143326; --bad:#f08c6c; --bad-soft:#3a2018; color-scheme:dark}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.7}
+.wrap{max-width:1060px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+a{color:var(--court)}
+p{margin:0}
+[hidden]{display:none!important}
+
+header{background:var(--court);color:#fff;position:relative;overflow:hidden;border-bottom:8px solid #fff}
+header .lines{position:absolute;right:-60px;top:-20px;height:120%;opacity:.2;pointer-events:none}
+header .wrap{position:relative;padding-block:28px 48px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.brand{white-space:nowrap;font-family:var(--f-num);font-weight:700;font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:#d6e6f1}
+.langs{display:flex;background:rgba(0,0,0,.18);border-radius:999px;padding:3px}
+.langs button{white-space:nowrap;font:600 14px var(--f-body);color:#d6e6f1;background:none;border:0;padding:5px 14px;border-radius:999px;cursor:pointer}
+.langs button[aria-pressed="true"]{background:#fff;color:var(--court-deep)}
+.langs button:focus-visible{outline:2px solid var(--ball)}
+h1{font-weight:800;font-size:clamp(36px,6.4vw,66px);line-height:1.05;letter-spacing:-.02em;margin:56px 0 18px;max-width:14em;text-wrap:balance}
+h1 .hl{box-shadow:inset 0 -.28em 0 var(--ball)}
+.lede{font-size:19px;max-width:40em;color:#e6f0f7}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:16px;padding:12px 20px;border-radius:8px;text-decoration:none}
+.btn.primary{background:var(--ball);color:#102a3a}
+.btn.ghost{color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.5)}
+.board{margin-top:40px;background:var(--board);border-radius:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));overflow:hidden}
+.board div{padding:16px 20px;border-right:1px solid rgba(255,255,255,.08);color:var(--board-muted);font-size:14px;line-height:1.45}
+.board div:last-child{border-right:0}
+.board b{display:block;font-family:var(--f-num);font-weight:700;font-size:38px;line-height:1;color:var(--ball);margin-bottom:6px}
+
+section{padding-block:72px;border-bottom:3px solid var(--line)}
+.eyebrow{font-family:var(--f-num);font-weight:600;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--court);display:flex;align-items:center;gap:10px}
+.eyebrow::after{content:"";width:48px;height:2px;background:currentColor;opacity:.5}
+h2{font-weight:800;font-size:clamp(28px,4.4vw,42px);line-height:1.15;letter-spacing:-.015em;margin:8px 0 14px;max-width:20em;text-wrap:balance}
+.intro{color:var(--muted);max-width:42em}
+
+.split{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center;margin-top:28px}
+.frame{background:var(--board);border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px var(--line)}
+.frame svg{display:block;width:100%;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:14px;color:var(--muted);margin-top:12px}
+.legend i{display:inline-block;width:22px;height:4px;border-radius:2px;vertical-align:middle;margin-right:6px}
+ol.clip{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+ol.clip li{display:grid;grid-template-columns:44px 1fr;gap:14px;align-items:start}
+ol.clip .n{font-family:var(--f-num);font-weight:700;font-size:26px;line-height:1;color:var(--court);padding-top:2px}
+ol.clip b{display:block}
+ol.clip span{color:var(--muted);font-size:15.5px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:28px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px 22px;min-width:0}
+.card h3{margin:0 0 6px;font-size:18px}
+.card p{font-size:15.5px;color:var(--muted)}
+
+.pipe{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;margin-top:28px;background:var(--paper);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.pipe div{padding:18px 18px 20px;border-right:1px solid var(--line);min-width:0}
+.pipe div:last-child{border-right:0}
+.pipe .n{font-family:var(--f-num);font-weight:700;font-size:15px;letter-spacing:.1em;color:var(--court)}
+.pipe b{display:block;margin:4px 0 6px;font-size:16px}
+.pipe p{font-size:14px;color:var(--muted);line-height:1.55}
+
+.tbl{overflow-x:auto;margin-top:28px;background:var(--paper);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:15px}
+th,td{padding:12px 16px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top;min-width:12em}
+thead th{font-family:var(--f-num);font-weight:600;font-size:16px;letter-spacing:.04em;color:var(--muted);background:var(--court-soft)}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:700}
+td.fix{color:var(--good)}
+
+.install{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px;margin-top:28px}
+pre{margin:10px 0 0;background:var(--board);color:#e3edf2;border-radius:8px;padding:14px 16px;overflow-x:auto;font-size:14px;line-height:1.55}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.prompt{margin-top:28px;background:var(--paper);border-left:4px solid var(--ball);border-radius:0 10px 10px 0;padding:18px 22px;font-size:17px;max-width:46em}
+.prompt small{display:block;font-family:var(--f-num);font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-size:13px;margin-bottom:6px}
+ul.tips{margin:20px 0 0;padding-left:1.2em;display:grid;gap:8px;max-width:46em}
+.note{margin-top:28px;background:var(--bad-soft);border-radius:10px;padding:16px 20px;max-width:46em;font-size:15.5px}
+
+footer{background:var(--court-deep);color:#c9dbe7;font-size:14px}
+footer .wrap{padding-block:36px 56px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+footer a{color:#fff}
+@media (max-width:760px){.brand{font-size:15px;letter-spacing:.08em}.board b.sm{font-size:30px}.split{grid-template-columns:1fr}.pipe div{border-right:0;border-bottom:1px solid var(--line)}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+:lang(zh) body, body.zh{font-family:"Noto Sans SC","PingFang SC",var(--f-body)}
+</style>
+</head>
+<body>
+
+<header>
+  <svg class="lines" viewBox="0 0 400 420" fill="none" stroke="#fff" stroke-width="4" aria-hidden="true">
+    <rect x="20" y="20" width="360" height="380"/>
+    <line x1="65" y1="20" x2="65" y2="400"/><line x1="335" y1="20" x2="335" y2="400"/>
+    <line x1="65" y1="230" x2="335" y2="230"/><line x1="200" y1="230" x2="200" y2="400"/>
+  </svg>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">Tennis Video Review</div>
+      <div class="langs" role="group" aria-label="Language">
+        <button type="button" id="b-en" aria-pressed="true">EN</button>
+        <button type="button" id="b-zh" aria-pressed="false">中文</button>
+      </div>
+    </div>
+    <h1 data-l="en">Your practice video, reviewed <span class="hl">like a coach watched it</span></h1>
+    <h1 data-l="zh" hidden>把练球视频，变成<span class="hl">一份教练式复盘</span></h1>
+    <p class="lede" data-l="en">A Claude Skill for amateur tennis players. Upload a phone video of your session and get annotated slow-motion clips of your best and worst shots, the one thing that keeps breaking down, and a plan for your next practice.</p>
+    <p class="lede" data-l="zh" hidden>一个给业余网球爱好者的 Claude Skill。上传一段手机拍的练球视频，得到最好和最差几拍的标注慢动作、你反复出问题的那个环节，以及下一次练习的具体安排。</p>
+    <div class="cta">
+      <a class="btn primary repo-link" href="#install"><span data-l="en">Get the skill</span><span data-l="zh" hidden>获取技能</span></a>
+      <a class="btn ghost" href="#how"><span data-l="en">See how it works</span><span data-l="zh" hidden>看看怎么工作</span></a>
+    </div>
+    <div class="board">
+      <div><b>12</b><span data-l="en">annotated clips per session: best and worst 3 of each stroke</span><span data-l="zh" hidden>段标注视频：正反手最好、最差各 3 拍</span></div>
+      <div><b>1/4×</b><span data-l="en">slow motion with your swing path drawn on you</span><span data-l="zh" hidden>慢放，挥拍路线画在你本人身上</span></div>
+      <div><b>7</b><span data-l="en">technique metrics measured on every swing</span><span data-l="zh" hidden>项动作指标，每一拍都测</span></div>
+      <div><b class="sm">EN·中文</b><span data-l="en">two language versions of the same skill</span><span data-l="zh" hidden>中英文两个版本，方法相同</span></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="clip"><div class="wrap">
+  <div class="eyebrow"><span data-l="en">The clips</span><span data-l="zh" hidden>标注视频</span></div>
+  <h2 data-l="en">Every point in the review comes with a clip you can see</h2>
+  <h2 data-l="zh" hidden>每个结论都有一段能看见的视频</h2>
+  <div class="split">
+    <div>
+      <div class="frame">
+        <svg viewBox="0 0 640 390" role="img" aria-label="Diagram of an annotated clip: a swing path, a dashed reference path, and circles at the take-back and contact">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#ff8c00"/><stop offset="1" stop-color="#00dcff"/></linearGradient>
+          </defs>
+          <rect width="640" height="390" fill="#24608f"/>
+          <polygon points="60,390 580,390 470,170 170,170" fill="#2c6c9c"/>
+          <g stroke="#fff" stroke-width="3" fill="none" opacity=".75">
+            <polygon points="60,390 580,390 470,170 170,170"/>
+            <line x1="150" y1="250" x2="490" y2="250"/><line x1="320" y1="250" x2="320" y2="390"/>
+          </g>
+          <rect x="150" y="150" width="340" height="22" fill="none" stroke="#fff" stroke-width="2" opacity=".6"/>
+          <path d="M310 175 C 360 120, 410 140, 400 200 S 380 285, 420 270 S 470 220, 430 160 S 360 120, 300 150" fill="none" stroke="#000" stroke-width="9" stroke-dasharray="14 12" opacity=".7"/>
+          <path d="M310 175 C 360 120, 410 140, 400 200 S 380 285, 420 270 S 470 220, 430 160 S 360 120, 300 150" fill="none" stroke="#50ff50" stroke-width="5" stroke-dasharray="14 12"/>
+          <path d="M300 190 C 350 90, 430 70, 420 150 S 330 260, 400 250 S 480 170, 430 130 S 350 110, 290 160" fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round"/>
+          <circle cx="430" cy="92" r="26" fill="none" stroke="#e8553a" stroke-width="5"/>
+          <circle cx="400" cy="250" r="22" fill="none" stroke="#fff" stroke-width="4"/>
+          <rect x="190" y="18" width="260" height="44" fill="#000"/>
+          <text x="320" y="49" fill="#ff8a78" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="26" text-anchor="middle" class="svg-en">TAKE-BACK ABOVE THE HEAD</text>
+          <text x="320" y="49" fill="#ff8a78" font-family="Noto Sans SC, sans-serif" font-weight="700" font-size="24" text-anchor="middle" class="svg-zh" display="none">引拍举过了头顶</text>
+          <rect x="90" y="336" width="460" height="36" fill="#000"/>
+          <text x="320" y="360" fill="#fff" font-family="Inter Tight, sans-serif" font-size="17" text-anchor="middle" class="svg-en">Fix: stop at shoulder height, racket pointing back</text>
+          <text x="320" y="360" fill="#fff" font-family="Noto Sans SC, sans-serif" font-size="16" text-anchor="middle" class="svg-zh" display="none">改法：引拍停在肩高，拍头指向身后</text>
+        </svg>
+      </div>
+      <div class="legend">
+        <span><i style="background:linear-gradient(90deg,#ff8c00,#00dcff)"></i><span data-l="en">your swing path</span><span data-l="zh" hidden>你这一拍的路线</span></span>
+        <span><i style="background:repeating-linear-gradient(90deg,#3cd43c 0 8px,transparent 8px 13px)"></i><span data-l="en">your best swing of the day</span><span data-l="zh" hidden>你当天最好的一拍</span></span>
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin-top:6px" data-l="en">Diagram. Real clips are drawn on your own footage.</p>
+      <p style="font-size:13px;color:var(--muted);margin-top:6px" data-l="zh" hidden>示意图。真实视频会画在你自己的画面上。</p>
+    </div>
+    <ol class="clip">
+      <li><span class="n">01</span><div><b data-l="en">Real speed, once</b><b data-l="zh" hidden>原速播一遍</b><span data-l="en">So you recognise the shot.</span><span data-l="zh" hidden>先认出是哪一拍。</span></div></li>
+      <li><span class="n">02</span><div><b data-l="en">Quarter speed with the path drawn</b><b data-l="zh" hidden>1/4 慢放并画出路线</b><span data-l="en">Captions name each phase as it happens.</span><span data-l="zh" hidden>字幕逐个阶段说明。</span></div></li>
+      <li><span class="n">03</span><div><b data-l="en">Freeze at the top of the take-back</b><b data-l="zh" hidden>引拍最高点定格</b><span data-l="en">Green circle if it's right, red if it isn't.</span><span data-l="zh" hidden>对的画绿圈，有问题画红圈。</span></div></li>
+      <li><span class="n">04</span><div><b data-l="en">Freeze at contact</b><b data-l="zh" hidden>击球瞬间定格</b><span data-l="en">Where you hit the ball, and how bent your front knee is.</span><span data-l="zh" hidden>标出击球点和前腿膝盖角度。</span></div></li>
+      <li><span class="n">05</span><div><b data-l="en">Your best swing over your worst</b><b data-l="zh" hidden>最好的一拍叠在最差的一拍上</b><span data-l="en">Scaled to your body, with one sentence on the fix.</span><span data-l="zh" hidden>按身材缩放对齐，再写一句改法。</span></div></li>
+    </ol>
+  </div>
+</div></section>
+
+<section id="report"><div class="wrap">
+  <div class="eyebrow"><span data-l="en">The report</span><span data-l="zh" hidden>复盘报告</span></div>
+  <h2 data-l="en">Conclusion first, evidence second, next session last</h2>
+  <h2 data-l="zh" hidden>先给结论，再给证据，最后给下次练什么</h2>
+  <div class="grid">
+    <div class="card"><h3 data-l="en">A straight answer</h3><h3 data-l="zh" hidden>直接回答你的问题</h3><p data-l="en">Tell it what bothers you, like "my forehands fly long", and the report opens with the cause.</p><p data-l="zh" hidden>告诉它你最困扰的问题，比如“正手总飞天”，报告开头就回答原因。</p></div>
+    <div class="card"><h3 data-l="en">Best vs worst, side by side</h3><h3 data-l="zh" hidden>最好和最差并排对比</h3><p data-l="en">Three clips per category and a table of take-back, racket drop, contact, finish, feet and knee angle.</p><p data-l="zh" hidden>每类 3 段视频，加一张引拍、落拍、击球点、收拍、脚、膝盖角度的对比表。</p></div>
+    <div class="card"><h3 data-l="en">Net and out, when it can see</h3><h3 data-l="zh" hidden>看得清才统计过网下网</h3><p data-l="en">Counted by sampling on wall and clean indoor footage. When the ball can't be tracked, it says so instead of guessing.</p><p data-l="zh" hidden>练习墙和清楚的室内画面会抽样统计；追踪不到球时直接说明，不硬给数字。</p></div>
+    <div class="card"><h3 data-l="en">Knees and footwork, every time</h3><h3 data-l="zh" hidden>每次都看膝盖和脚步</h3><p data-l="en">Hopping, one-leg landings and pivoting on a straight leg, ranked by priority with a fix for each.</p><p data-l="zh" hidden>跳着打、单脚落地、直腿钉住转身，按优先级列出并给改法。</p></div>
+    <div class="card"><h3 data-l="en">Progress over time</h3><h3 data-l="zh" hidden>和上次比</h3><p data-l="en">Bring last time's report and get a before/after of your best and worst shots.</p><p data-l="zh" hidden>带上上次的报告，得到最好和最差一拍的前后对比。</p></div>
+    <div class="card"><h3 data-l="en">A plan for your setting</h3><h3 data-l="zh" hidden>按你的条件安排练习</h3><p data-l="en">Wall, ball machine, coach or partner: drills with reps, a countable target, and when to move on.</p><p data-l="zh" hidden>练习墙、发球机、教练还是对拉，各给练习项目、次数、可数的目标和进阶条件。</p></div>
+  </div>
+</div></section>
+
+<section id="how"><div class="wrap">
+  <div class="eyebrow"><span data-l="en">How it works</span><span data-l="zh" hidden>工作原理</span></div>
+  <h2 data-l="en">From phone footage to a coaching review</h2>
+  <h2 data-l="zh" hidden>从手机视频到教练式复盘</h2>
+  <p class="intro" data-l="en">Claude runs the analysis in Python with an open pose model, then checks the key frames by eye before anything goes into the report.</p>
+  <p class="intro" data-l="zh" hidden>Claude 用 Python 和开源姿态模型做分析，进入报告的关键帧都会再逐帧人工确认。</p>
+  <div class="pipe">
+    <div><span class="n">STEP 1</span><b data-l="en">Pose</b><b data-l="zh" hidden>姿态识别</b><p data-l="en">YOLO pose on every few frames; you are tracked by your clothing if others are in shot.</p><p data-l="zh" hidden>YOLO 姿态模型；画面里有别人时按衣服颜色跟踪你。</p></div>
+    <div><span class="n">STEP 2</span><b data-l="en">Swings</b><b data-l="zh" hidden>找挥拍</b><p data-l="en">Peaks in wrist speed, at least 1.6 s apart; hand position before the swing tells forehand from backhand.</p><p data-l="zh" hidden>手腕速度峰值，间隔至少 1.6 秒；按挥拍前手在身体哪侧分正反手。</p></div>
+    <div><span class="n">STEP 3</span><b data-l="en">Contact</b><b data-l="zh" hidden>击球时刻</b><p data-l="en">The sound of the strings, filtered to skip the bounce off the wall.</p><p data-l="zh" hidden>用击球声音定位，避开球撞墙的声音。</p></div>
+    <div><span class="n">STEP 4</span><b data-l="en">Metrics</b><b data-l="zh" hidden>测指标</b><p data-l="en">Take-back height, knee bend, stance width, contact height, one-leg landings.</p><p data-l="zh" hidden>引拍高度、屈膝、站距、击球高度、单脚落地。</p></div>
+    <div><span class="n">STEP 5</span><b data-l="en">Clips</b><b data-l="zh" hidden>做视频</b><p data-l="en">Best and worst shots picked, checked frame by frame, and annotated.</p><p data-l="zh" hidden>挑出最好和最差的拍子，逐帧确认后加标注。</p></div>
+    <div><span class="n">STEP 6</span><b data-l="en">Plan</b><b data-l="zh" hidden>练习计划</b><p data-l="en">Faults mapped to drills for your setting, with targets for next time.</p><p data-l="zh" hidden>把问题对应到适合你场景的练习，并定下次的目标。</p></div>
+  </div>
+</div></section>
+
+<section id="faults"><div class="wrap">
+  <div class="eyebrow"><span data-l="en">Built-in knowledge</span><span data-l="zh" hidden>内置经验</span></div>
+  <h2 data-l="en">The faults it looks for first</h2>
+  <h2 data-l="zh" hidden>它会先排查这些常见问题</h2>
+  <div class="tbl"><table>
+    <thead><tr><th data-l="en">You notice</th><th data-l="zh" hidden>你遇到的</th><th data-l="en">Usual cause</th><th data-l="zh" hidden>常见原因</th><th data-l="en">Fix</th><th data-l="zh" hidden>改法</th></tr></thead>
+    <tbody>
+      <tr><td><span data-l="en">Balls fly long or into the sky</span><span data-l="zh" hidden>球飞天、出底线</span></td><td><span data-l="en">Swing path too vertical; lifting from the knees on high bounces</span><span data-l="zh" hidden>挥拍路线太竖；高球站在原地从膝盖往上拉</span></td><td class="fix"><span data-l="en">Finish over the shoulder, not straight up; step back on high balls</span><span data-l="zh" hidden>收拍到肩上而不是头顶；高球退一步</span></td></tr>
+      <tr><td><span data-l="en">Forehand into the net</span><span data-l="zh" hidden>正手下网</span></td><td><span data-l="en">Take-back above the head, racket can't drop in time</span><span data-l="zh" hidden>引拍举过头，落拍来不及</span></td><td class="fix"><span data-l="en">Stop the take-back at shoulder height</span><span data-l="zh" hidden>引拍停在肩高</span></td></tr>
+      <tr><td><span data-l="en">Contact too far back, then crowded</span><span data-l="zh" hidden>击球点忽前忽后</span></td><td><span data-l="en">Late preparation: reaching for wide balls, flicking fast ones</span><span data-l="zh" hidden>准备晚：宽球去够，急球侧面甩</span></td><td class="fix"><span data-l="en">Split-step; be turned with the racket back by the bounce</span><span data-l="zh" hidden>分腿小跳；球落地时已侧身、拍子在身后</span></td></tr>
+      <tr><td><span data-l="en">Two-hander into the net</span><span data-l="zh" hidden>双反下网</span></td><td><span data-l="en">Racket held upright at the chest</span><span data-l="zh" hidden>拍子竖着举在胸前</span></td><td class="fix"><span data-l="en">Rest it flat at the hip while waiting</span><span data-l="zh" hidden>等球时拍子平放在腰侧</span></td></tr>
+      <tr><td><span data-l="en">Hopping, landing on one leg</span><span data-l="zh" hidden>跳着打、单脚落地</span></td><td><span data-l="en">Narrow stance; swinging before the feet stop</span><span data-l="zh" hidden>站得太窄，脚没停就挥</span></td><td class="fix"><span data-l="en">Brake on the last step, swing with both feet down</span><span data-l="zh" hidden>最后一步刹住，两脚踩地再挥</span></td></tr>
+      <tr><td><span data-l="en">Late one-handed backhand</span><span data-l="zh" hidden>单反引拍晚</span></td><td><span data-l="en">Setting up as a two-hander, then switching</span><span data-l="zh" hidden>先摆成双反再临时改单反</span></td><td class="fix"><span data-l="en">Decide early; train one-handers in their own block</span><span data-l="zh" hidden>早决定；单反放在固定专项时间练</span></td></tr>
+    </tbody></table></div>
+</div></section>
+
+<section id="install"><div class="wrap">
+  <div class="eyebrow"><span data-l="en">Install</span><span data-l="zh" hidden>安装</span></div>
+  <h2 data-l="en">Add it to Claude in a minute</h2>
+  <h2 data-l="zh" hidden>一分钟装进 Claude</h2>
+  <p class="intro" data-l="en">Pick one language folder. Both contain the same method.</p>
+  <p class="intro" data-l="zh" hidden>选一个语言版本的文件夹装就行，两个版本方法相同。</p>
+  <div class="install">
+    <div class="card"><h3>Claude (web / desktop)</h3>
+      <p data-l="en">Download the repo, zip <code>skills/tennis-video-review-public</code> (English) or <code>skills/tennis-video-review-public-zh</code> (中文), and upload it as a custom skill in Claude's settings. Code execution must be on.</p>
+      <p data-l="zh" hidden>下载仓库，把 <code>skills/tennis-video-review-public-zh</code>（中文）或 <code>skills/tennis-video-review-public</code>（英文）打成 zip，在 Claude 设置里作为自定义技能上传。需要开启代码执行。</p>
+    </div>
+    <div class="card"><h3>Claude Code</h3>
+      <p data-l="en">Copy a skill folder into your skills directory:</p>
+      <p data-l="zh" hidden>把技能文件夹复制到 skills 目录：</p>
+<pre><code><span class="clone">git clone https://github.com/OWNER/REPO</span>
+cp -r REPO/skills/tennis-video-review-public ~/.claude/skills/</code></pre>
+    </div>
+  </div>
+  <div class="prompt">
+    <small data-l="en">Try a prompt like</small><small data-l="zh" hidden>可以这样说</small>
+    <p data-l="en">“Here's 20 minutes of me hitting against the wall. I'm in the white shirt, right-handed, two-handed backhand. My forehands go into the net when the ball comes fast. Review it and tell me what to practice this week.”</p>
+    <p data-l="zh" hidden>“这是我对着练习墙打的 20 分钟。穿白衣服的是我，右手持拍，双手反手。球一快我的正手就下网。帮我复盘，告诉我这周该练什么。”</p>
+  </div>
+</div></section>
+
+<section id="film"><div class="wrap">
+  <div class="eyebrow"><span data-l="en">Filming</span><span data-l="zh" hidden>拍摄</span></div>
+  <h2 data-l="en">Better footage, sharper review</h2>
+  <h2 data-l="zh" hidden>拍得越清楚，复盘越准</h2>
+  <ul class="tips">
+    <li data-l="en"><b>Side-on is the most useful angle:</b> outside the net on your hitting side, 3–4 m away, at waist height.</li>
+    <li data-l="zh" hidden><b>侧面机位最有用：</b>持拍手一侧网外 3–4 米、腰高。</li>
+    <li data-l="en"><b>Behind you</b>, 1.2–1.5 m high and centered, is best for counting net and out.</li>
+    <li data-l="zh" hidden><b>身后机位</b> 1.2–1.5 米高、正对中线，最适合统计过网/下网。</li>
+    <li data-l="en">4K 60 fps or 1080p 120 fps, focus and exposure locked, a few continuous minutes rather than many short clips.</li>
+    <li data-l="zh" hidden>4K 60 帧或 1080p 120 帧，锁定对焦和曝光，连续拍几分钟，不要拍很多短片段。</li>
+    <li data-l="en">Outdoors, frame more of the far court and less sky and trees.</li>
+    <li data-l="zh" hidden>室外少拍天空和树，多拍对面场地。</li>
+  </ul>
+  <p class="note" data-l="en"><b>Limits.</b> Pose comes from one phone camera, so angles are estimates. Compare with your own past sessions, not with other players. This is not medical advice; if something keeps hurting, see a sports-medicine doctor.</p>
+  <p class="note" data-l="zh" hidden><b>局限。</b>姿态来自单个手机机位，角度只是估计，适合和自己的历次数据比，不适合和别人比。这不是医疗建议，持续疼痛请去看运动医学科。</p>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <span>Tennis Video Review (Public) · <span data-l="en">a Claude Skill</span><span data-l="zh" hidden>一个 Claude Skill</span></span>
+  <a class="repo-link" href="#install"><span data-l="en">View on GitHub</span><span data-l="zh" hidden>在 GitHub 查看</span></a>
+</div></footer>
+
+<script>
+(function(){
+  // Derive the repo URL from the GitHub Pages address (owner.github.io/repo/).
+  var m = location.hostname.match(/^([^.]+)\.github\.io$/);
+  if (m) {
+    var repo = location.pathname.split('/').filter(Boolean)[0] || (m[1] + '.github.io');
+    var url = 'https://github.com/' + m[1] + '/' + repo;
+    document.querySelectorAll('a.repo-link').forEach(function(a){ a.href = url; });
+    document.querySelectorAll('.clone').forEach(function(s){ s.textContent = 'git clone ' + url; });
+    document.querySelectorAll('pre code').forEach(function(c){ c.innerHTML = c.innerHTML.replace(/REPO\//g, repo + '/'); });
+  }
+  function set(lang){
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.body.classList.toggle('zh', lang === 'zh');
+    document.querySelectorAll('[data-l]').forEach(function(el){ el.hidden = el.getAttribute('data-l') !== lang; });
+    document.querySelectorAll('.svg-en').forEach(function(el){ el.setAttribute('display', lang === 'en' ? 'inline' : 'none'); });
+    document.querySelectorAll('.svg-zh').forEach(function(el){ el.setAttribute('display', lang === 'zh' ? 'inline' : 'none'); });
+    document.getElementById('b-en').setAttribute('aria-pressed', lang === 'en');
+    document.getElementById('b-zh').setAttribute('aria-pressed', lang === 'zh');
+    try { localStorage.setItem('tvr-lang', lang); } catch(e){}
+  }
+  var saved = null; try { saved = localStorage.getItem('tvr-lang'); } catch(e){}
+  var q = new URLSearchParams(location.search).get('lang');
+  set(q || saved || ((navigator.language || '').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en'));
+  document.getElementById('b-en').onclick = function(){ set('en'); };
+  document.getElementById('b-zh').onclick = function(){ set('zh'); };
+})();
+</script>
+</body>
+</html>
