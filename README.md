@@ -65,3 +65,7 @@ If you have a previous review, include it and you'll get a before/after comparis
 - Pose comes from a single phone camera, so knee angles and contact depth are approximate. Compare your numbers with your own past sessions, not with other people.
 - With moving trees or many people in the background, the ball usually can't be tracked, so no net/out percentage is reported.
 - This is not medical advice. If a knee or anything else keeps hurting, see a sports-medicine doctor.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
