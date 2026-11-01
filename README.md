@@ -1,4 +1,4 @@
-# Tennis Video Review (Public)
+# Tennis Video Private Coach
 
 **English** · [中文](README.zh-CN.md)
 
@@ -20,9 +20,9 @@ It also ships with a table of common amateur faults (sky balls, late contact, up
 
 ```
 skills/
-  tennis-video-review-public/      English skill
+  tennis-video-private-coach/      English skill
     SKILL.md
-  tennis-video-review-public-zh/   Chinese skill (中文版)
+  tennis-video-private-coach-zh/   Chinese skill (中文版)
     SKILL.md
 docs/
   index.html                       Project page (GitHub Pages)
@@ -32,7 +32,7 @@ Install one language version; they contain the same method.
 
 ## Install
 
-**Claude apps (claude.ai / desktop):** zip the skill folder you want (for example `tennis-video-review-public/`) and upload it as a custom skill in Claude's settings. Code execution needs to be enabled.
+**Claude apps (claude.ai / desktop):** zip the skill folder you want (for example `tennis-video-private-coach/`) and upload it as a custom skill in Claude's settings. Code execution needs to be enabled.
 
 **Claude Code:** copy the folder into `~/.claude/skills/` (personal) or `.claude/skills/` in a project.
 

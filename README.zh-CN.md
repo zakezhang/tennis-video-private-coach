@@ -1,4 +1,4 @@
-# Tennis Video Review (Public)
+# Tennis Video Private Coach
 
 [English](README.md) · **中文**
 
@@ -20,9 +20,9 @@
 
 ```
 skills/
-  tennis-video-review-public/      英文版
+  tennis-video-private-coach/      英文版
     SKILL.md
-  tennis-video-review-public-zh/   中文版
+  tennis-video-private-coach-zh/   中文版
     SKILL.md
 docs/
   index.html                       项目介绍页（GitHub Pages）
@@ -32,7 +32,7 @@ docs/
 
 ## 安装
 
-**Claude 网页版 / 桌面版**：把想用的技能文件夹（例如 `tennis-video-review-public-zh/`）打成 zip，在 Claude 设置里作为自定义技能上传。需要开启代码执行。
+**Claude 网页版 / 桌面版**：把想用的技能文件夹（例如 `tennis-video-private-coach-zh/`）打成 zip，在 Claude 设置里作为自定义技能上传。需要开启代码执行。
 
 **Claude Code**：把文件夹复制到 `~/.claude/skills/`（个人）或项目里的 `.claude/skills/`。
 

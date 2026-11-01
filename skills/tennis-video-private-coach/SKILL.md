@@ -1,9 +1,9 @@
 ---
-name: tennis-video-review-public
+name: tennis-video-private-coach
 description: Review a tennis practice video and produce a coaching report. Detects every swing, separates forehands and backhands, picks the best and worst shots and renders annotated slow-motion clips with the swing path drawn on the player, counts net/out when the ball is visible, checks knees and footwork, compares with past sessions, and writes a concrete plan for the next practice. Use when someone uploads a practice video, asks for a session review, or asks what to practice next.
 ---
 
-# Tennis Video Review (Public)
+# Tennis Video Private Coach
 
 Turn an amateur player's practice video into a review they can act on: **which part of the stroke breaks down, which shots prove it, and exactly what to practice next**. Built for beginner to intermediate players hitting against a wall, a ball machine, a coach, or a hitting partner.
 

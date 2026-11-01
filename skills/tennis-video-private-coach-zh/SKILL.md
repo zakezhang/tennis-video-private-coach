@@ -1,9 +1,9 @@
 ---
-name: tennis-video-review-public-zh
+name: tennis-video-private-coach-zh
 description: 分析网球练习视频并出复盘报告：识别每一次挥拍、区分正反手、挑出最好和最差的几拍做带挥拍轨迹的慢动作标注视频、统计过网/下网（能看清时）、检查膝盖和脚步、和往次对比，并给出下一次练习的具体安排。用户上传练球视频、要求复盘或问“接下来怎么练”时使用。
 ---
 
-# Tennis Video Review (Public) · 中文版
+# Tennis Video Private Coach · 中文版
 
 把一段业余球员的练球视频变成一份能直接用的复盘：**问题出在哪个环节、证据是哪几拍、下次具体练什么**。面向初学者到中级水平，适用于练习墙、发球机、教练喂球和对拉。
 

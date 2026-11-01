@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Tennis Video Review</title>
+<title>Tennis Video Private Coach</title>
 <meta name="description" content="A Claude Skill that turns your tennis practice video into a coaching review with annotated slow-motion clips and a practice plan.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Inter+Tight:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
@@ -34,7 +34,7 @@ header{background:var(--court);color:#fff;position:relative;overflow:hidden;bord
 header .lines{position:absolute;right:-60px;top:-20px;height:120%;opacity:.2;pointer-events:none}
 header .wrap{position:relative;padding-block:28px 48px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:12px}
-.brand{white-space:nowrap;font-family:var(--f-num);font-weight:700;font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:#d6e6f1}
+.brand{min-width:0;line-height:1.3;font-family:var(--f-num);font-weight:700;font-size:18px;letter-spacing:.14em;text-transform:uppercase;color:#d6e6f1}
 .langs{display:flex;background:rgba(0,0,0,.18);border-radius:999px;padding:3px}
 .langs button{white-space:nowrap;font:600 14px var(--f-body);color:#d6e6f1;background:none;border:0;padding:5px 14px;border-radius:999px;cursor:pointer}
 .langs button[aria-pressed="true"]{background:#fff;color:var(--court-deep)}
@@ -114,7 +114,7 @@ footer a{color:#fff}
   </svg>
   <div class="wrap">
     <div class="top">
-      <div class="brand">Tennis Video Review</div>
+      <div class="brand">Tennis Video Private Coach</div>
       <div class="langs" role="group" aria-label="Language">
         <button type="button" id="b-en" aria-pressed="true">EN</button>
         <button type="button" id="b-zh" aria-pressed="false">中文</button>
@@ -240,14 +240,14 @@ footer a{color:#fff}
   <p class="intro" data-l="zh" hidden>选一个语言版本的文件夹装就行，两个版本方法相同。</p>
   <div class="install">
     <div class="card"><h3>Claude (web / desktop)</h3>
-      <p data-l="en">Download the repo, zip <code>skills/tennis-video-review-public</code> (English) or <code>skills/tennis-video-review-public-zh</code> (中文), and upload it as a custom skill in Claude's settings. Code execution must be on.</p>
-      <p data-l="zh" hidden>下载仓库，把 <code>skills/tennis-video-review-public-zh</code>（中文）或 <code>skills/tennis-video-review-public</code>（英文）打成 zip，在 Claude 设置里作为自定义技能上传。需要开启代码执行。</p>
+      <p data-l="en">Download the repo, zip <code>skills/tennis-video-private-coach</code> (English) or <code>skills/tennis-video-private-coach-zh</code> (中文), and upload it as a custom skill in Claude's settings. Code execution must be on.</p>
+      <p data-l="zh" hidden>下载仓库，把 <code>skills/tennis-video-private-coach-zh</code>（中文）或 <code>skills/tennis-video-private-coach</code>（英文）打成 zip，在 Claude 设置里作为自定义技能上传。需要开启代码执行。</p>
     </div>
     <div class="card"><h3>Claude Code</h3>
       <p data-l="en">Copy a skill folder into your skills directory:</p>
       <p data-l="zh" hidden>把技能文件夹复制到 skills 目录：</p>
 <pre><code><span class="clone">git clone https://github.com/OWNER/REPO</span>
-cp -r REPO/skills/tennis-video-review-public ~/.claude/skills/</code></pre>
+cp -r REPO/skills/tennis-video-private-coach ~/.claude/skills/</code></pre>
     </div>
   </div>
   <div class="prompt">
@@ -277,7 +277,7 @@ cp -r REPO/skills/tennis-video-review-public ~/.claude/skills/</code></pre>
 </main>
 
 <footer><div class="wrap">
-  <span>Tennis Video Review (Public) · <span data-l="en">a Claude Skill · MIT License</span><span data-l="zh" hidden>一个 Claude Skill · MIT 许可证</span></span>
+  <span>Tennis Video Private Coach · <span data-l="en">a Claude Skill · MIT License</span><span data-l="zh" hidden>一个 Claude Skill · MIT 许可证</span></span>
   <a class="repo-link" href="#install"><span data-l="en">View on GitHub</span><span data-l="zh" hidden>在 GitHub 查看</span></a>
 </div></footer>
 
@@ -300,9 +300,9 @@ cp -r REPO/skills/tennis-video-review-public ~/.claude/skills/</code></pre>
     document.querySelectorAll('.svg-zh').forEach(function(el){ el.setAttribute('display', lang === 'zh' ? 'inline' : 'none'); });
     document.getElementById('b-en').setAttribute('aria-pressed', lang === 'en');
     document.getElementById('b-zh').setAttribute('aria-pressed', lang === 'zh');
-    try { localStorage.setItem('tvr-lang', lang); } catch(e){}
+    try { localStorage.setItem('tvpc-lang', lang); } catch(e){}
   }
-  var saved = null; try { saved = localStorage.getItem('tvr-lang'); } catch(e){}
+  var saved = null; try { saved = localStorage.getItem('tvpc-lang'); } catch(e){}
   var q = new URLSearchParams(location.search).get('lang');
   set(q || saved || ((navigator.language || '').toLowerCase().indexOf('zh') === 0 ? 'zh' : 'en'));
   document.getElementById('b-en').onclick = function(){ set('en'); };
