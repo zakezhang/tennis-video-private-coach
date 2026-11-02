@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <a href="README.md">English</a> · <b>中文</b> · <a href="https://zakezhang.github.io/tennis-video-review-public/?lang=zh">介绍页</a>
+  <a href="README.md">English</a> · <b>中文</b> · <a href="https://zakezhang.github.io/tennis-video-private-coach/?lang=zh">介绍页</a>
 </p>
 
 <p align="center">
@@ -21,7 +21,7 @@
 把下面这句话粘贴到你常用的 AI 工具或 Agent 的**聊天输入框**，发送即可：
 
 ```text
-请帮我安装并配置这个网球视频复盘 Skill，检查运行环境：https://github.com/zakezhang/tennis-video-review-public/tree/main/skills/tennis-video-private-coach-zh
+请帮我安装并配置这个网球视频复盘 Skill，检查运行环境：https://github.com/zakezhang/tennis-video-private-coach/tree/main/skills/tennis-video-private-coach-zh
 ```
 
 **Codex、ChatGPT、Claude、DeepSeek、Gemini、Kimi、Workbuddy、Trae** 都可以使用这个入口。支持技能安装的 Agent 会按当前工具的方式配置；不支持安装时，请让 AI 读取技能中的 `SKILL.md`，在本次对话中按它执行。

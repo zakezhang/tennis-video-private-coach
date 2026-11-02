@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <b>English</b> · <a href="README.zh-CN.md">中文</a> · <a href="https://zakezhang.github.io/tennis-video-review-public/">Project page</a>
+  <b>English</b> · <a href="README.zh-CN.md">中文</a> · <a href="https://zakezhang.github.io/tennis-video-private-coach/">Project page</a>
 </p>
 
 <p align="center">
@@ -21,7 +21,7 @@
 Paste into the **chat box** of the AI tool or agent you use:
 
 ```text
-Install and set up this tennis video review skill, and check its requirements: https://github.com/zakezhang/tennis-video-review-public/tree/main/skills/tennis-video-private-coach
+Install and set up this tennis video review skill, and check its requirements: https://github.com/zakezhang/tennis-video-private-coach/tree/main/skills/tennis-video-private-coach
 ```
 
 You can send the same prompt to **Codex, ChatGPT, Claude, DeepSeek, Gemini, Kimi, Workbuddy, or Trae**. Agents with skill support can configure it for their environment. If installation is unavailable, ask the AI to read the skill’s `SKILL.md` and follow it in this chat.
